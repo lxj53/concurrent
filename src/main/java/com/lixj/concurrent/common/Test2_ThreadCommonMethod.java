@@ -7,7 +7,7 @@ package com.lixj.concurrent.common;
  * @Date: 2020/10/18/16:41
  * @Description: 线程常用的方法
  */
-public class Test2_commonMethod {
+public class Test2_ThreadCommonMethod {
     public static void main(String[] args) {
         Thread myThread = new Thread(() -> {
             for (int i = 0; i < 10; i++) {

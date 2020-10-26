@@ -10,7 +10,7 @@ import java.util.concurrent.FutureTask;
  * @Date: 2020/10/15/23:14
  * @Description: 创建线程的四种方式
  */
-public class Test1_createThread {
+public class Test1_CreateThread {
     public static void main(String[] args) throws Exception {
         // 第一种方法: Thread对象的子类
         // 1.定义Thread对象的子类，并重写run方法，run方法就是线程需要完成的任务
