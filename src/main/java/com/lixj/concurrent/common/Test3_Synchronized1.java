@@ -7,7 +7,7 @@ import lombok.extern.slf4j.Slf4j;
  * ProductName :    Hundsun UF30
  * ProjectName :    适当性
  * Package :        com.concurrent
- * Description :    线程同步_synchronized修饰实例方法
+ * Description :    synchronized使用方法1：修饰实例方法
  *
  * @author :        12092
  * @version :       1.0
@@ -17,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 
 @Slf4j
-public class Test3_Synchronize1 {
+public class Test3_Synchronized1 {
 
     /**
      * 测试synchronized修饰实例方法。
