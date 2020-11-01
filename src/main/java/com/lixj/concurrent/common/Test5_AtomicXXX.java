@@ -24,6 +24,12 @@ public class Test5_AtomicXXX {
     // 定义使用方法
     private static AtomicInteger atomicInteger = new AtomicInteger(0);
 
+    /**
+     * 结论：atomicXXX封装了常用的操作（通过Unsafe类使用CAS操作实现），避免开发人员手动加锁
+     *
+     * @param args
+     * @throws InterruptedException
+     */
     public static void main(String[] args) throws InterruptedException {
         // 线程开始自增数量
         new Thread(() -> {
