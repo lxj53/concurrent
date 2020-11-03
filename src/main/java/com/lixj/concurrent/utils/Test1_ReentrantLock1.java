@@ -72,7 +72,7 @@ public class Test1_ReentrantLock1 {
         thread1.start();
 
         // 不同的线程，需要等第一个线程释放锁后才能执行（线程1和线程2都需要锁住对象）
-        // 即需要等线程1输出结束后才能输出线程2，可查看线程的名称
+        // 即需要等线程1输出结束后才能输出线程2，可查看输出日志中线程的名称
         Thread thread2 = new Thread(test1_reentrantLock1::threadRun2);
         thread2.start();
 

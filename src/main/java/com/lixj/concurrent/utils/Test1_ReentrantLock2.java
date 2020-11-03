@@ -51,6 +51,7 @@ public class Test1_ReentrantLock2 {
             // 尝试去获取锁对象，指定时间内若没获取到，则自动返回未获取到锁的标志
             // 然后代码自动自行
             lock = reentrantLock.tryLock(2, TimeUnit.SECONDS);
+            // notice-lixj 注意
             // 最差的结果也是在2秒后执行（不管有没有获取到锁都会执行）
             for (int i = 0; i < 10; i++) {
                 log.info("线程2输出：{}", i);
