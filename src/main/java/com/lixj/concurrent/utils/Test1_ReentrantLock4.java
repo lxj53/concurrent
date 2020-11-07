@@ -2,8 +2,6 @@ package com.lixj.concurrent.utils;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
@@ -25,7 +23,21 @@ import java.util.concurrent.locks.ReentrantLock;
 public class Test1_ReentrantLock4 {
 
     // 创建锁的时候，增加是否是公平锁的标志，默认是非公平锁
-    private static Lock reentrantLock = new ReentrantLock(true);
+    private Lock reentrantLock = new ReentrantLock(true);
+
+    /**
+     * 用于检测是否是公平锁，若是正常锁，应该是交替输出，可通过声明公平非公平对比试验结果
+     */
+    public void run() {
+        for (int i = 0; i < 100; i++) {
+            try {
+                reentrantLock.lock();
+                log.info("线程{}得到锁", Thread.currentThread().getName());
+            } finally {
+                reentrantLock.unlock();
+            }
+        }
+    }
 
     /**
      * 结论：创建Lock锁的时候，增加是否是公平锁的标志入参，默认是非公平锁（synchronized默认也是非公平锁）
@@ -38,36 +50,12 @@ public class Test1_ReentrantLock4 {
      * @param args
      * @throws InterruptedException
      */
-    public static void main(String[] args) throws InterruptedException {
-        Thread[] threads = new Thread[5000];
-
-        AtomicInteger atomicInteger = new AtomicInteger(0);
-
-        // 案例难以实现，暂未找到公平锁和非公平锁的案例
-        for (int i = 0; i < threads.length; i++) {
-            int finalI = i;
-            threads[i] = new Thread(() -> {
-                try {
-                    reentrantLock.lock();
-                    log.info("第{}个线程开始执行", Thread.currentThread().getName());
-                    if (Integer.parseInt(Thread.currentThread().getName()) != atomicInteger.incrementAndGet()) {
-                        log.error("####################出现非公平现象:{}", Thread.currentThread().getName());
-                    }
-                    if (finalI == 0) {
-                        TimeUnit.SECONDS.sleep(20);
-                    }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                } finally {
-                    reentrantLock.unlock();
-                }
-            }, String.valueOf(i + 1));
-        }
-        for (int i = 0; i < threads.length; i++) {
-            threads[i].start();
-            // 依次启动线程，确保线程是按照顺序启动的
-            TimeUnit.MILLISECONDS.sleep(2);
-        }
-        log.info("主线程睡眠一会，再叫醒第一个线程");
+    public static void main(String[] args) {
+        Test1_ReentrantLock4 test1_reentrantLock4 = new Test1_ReentrantLock4();
+        Thread t1 = new Thread(test1_reentrantLock4::run);
+        Thread t2 = new Thread(test1_reentrantLock4::run);
+        // t1和t2线程启动后，轮流去争取锁对象
+        t1.start();
+        t2.start();
     }
 }
